@@ -10,8 +10,8 @@ exports.github = function (req, res) {
     res.send(html);
 };
 
-exports.wechat = function (req, res) {
-    var html = "<h2>你好, 微信用户，" + req.user.username +"(" + req.user.name.givenName + " " + req.user.name.familyName+ ")</h2>" +
+exports.qq = function (req, res) {
+    var html = "<h2>你好, QQ用户，" + req.user.username +"(" + req.user.name.givenName + " " + req.user.name.familyName+ ")</h2>" +
         "<p><a href='/logout'>退出</a></p>";
     res.send(html);
 };

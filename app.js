@@ -8,9 +8,9 @@ var express = require('express')
 var passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
     , GithubStrategy = require('passport-github').Strategy
-    ，WechatPublicStrategy=require('passport-wechat-public').Strategy
+    ,qqStrategy=require('passport-qq').Strategy
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -54,19 +54,13 @@ passport.use(new GithubStrategy({
 },function(accessToken, refreshToken, profile, done) {
     done(null, profile);
 }));
-passport.use("wechat",new WechatPublicStrategy({
-    appId: wxbee2ba5fe1e9c0d4,
-    appSecret: 04d61d58aa696e839dac0790b011fd47,
-    callbackURL: "http://localhost:3000/auth/wechat/callback",
-    state: "state",
-    scope: "snsapi_base",
-    agent: "wechat",
-    getToken: function(openid, cb) {...cb(null, accessToken)}
-    saveToken: function (openid, token, cb) {... /*save to db*/ cb(null)}
+passport.use(new qqStrategy({
+    clientID: "101315903",
+    clientSecret: "6057b33da46b42a0d09703e4bb72f684",
+    callbackURL: "http://www.ssforum.top/auth/qq/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ openId: profile.id }, function (err, user) {
-		console.log(user);
+    User.findOrCreate({ qqId: profile.id }, function (err, user) {
       return done(err, user);
     });
   }
@@ -104,12 +98,12 @@ app.get("/auth/github/callback",
         failureRedirect: '/'
     }));
 
-app.all('/wechat', isLoggedIn);
-app.get("/wechat",user.wechat);
-app.get("/auth/wechat", passport.authenticate("linkedin",{}));
-app.get("/auth/wechat/callback",
-    passport.authenticate("wechat",{
-        successRedirect: '/wechat',
+app.all('/qq', isLoggedIn);
+app.get("/qq",user.qq);
+app.get("/auth/qq", passport.authenticate("linkedin",{}));
+app.get("/auth/qq/callback",
+    passport.authenticate("qq",{
+        successRedirect: '/qq',
         failureRedirect: '/'
     }));
 
