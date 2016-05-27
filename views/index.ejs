@@ -1,28 +1,34 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  
-  <meta property="qc:admins" content="0170367227633672556470" />
-
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <div>
-            <label>Username:</label>
-            <input type="text" name="username"/>
-        </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" name="password"/>
-        </div>
-        <div>
-            <input type="submit" value="Log In"/>
-        </div>
-    </form>
-    <hr/>
-    <a href="/auth/github">Github Login</a>， <a href="/auth/qq">QQ Login</a>
-  </body>
-</html>
+﻿<% include header %>
+  <div class="container">
+                   <div class="jumbotron">
+                           <h1>Nodejs项目进度汇报</h1>
+                           <p>软微学院论坛项目</p>
+                 </div>
+                   <div class="row">
+                           <div class="col-sm-4">
+                                   <h3>用户功能</h3>
+                                  <p>Passport登录验证</p>
+                                  <p>23号已经完成基本的登录跳转，github三方登录</p>
+								  <p>24号完成数据库部分的用户登录与注册功能</p>
+								    <p>腾讯三方登录域名等待审核中</p>
+								   <p>24号完成用户基本信息界面</p>
+                          </div>
+                          <div class="col-sm-4">
+                                   <h3>周计划</h3>
+                                  <p>完成基本的帖子发表和评论功能</p>
+								    <p>基本微信应用的接入</p>
+                                  <p></p>
+                        </div>
+                         <div class="col-sm-4">
+                                <h3>帖子功能</h3>
+                                
+                                  <p>24号完成帖子的Markdown编辑器的数据插入功能</p>
+								   <p>25号完成inbox模板帖子的分类查询和某个帖子的查询（总查询会引起内存问题），完成JqGrid模板查询</p>
+								   <p>26号完成jqGrid模板（编辑和删除，搜索自定义行列值等功能），完成帖子的再次编辑功能</p>
+								   <p>计划27号帖子的评论数据库设计和页面功能</p>
+                          </div>
+ 
+</div>
+</div>
+  <%- include fixsetting %>
+<% include footer %>

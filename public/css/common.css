@@ -1,0 +1,73 @@
+ .page-title{
+         font-size:20px;
+ }
+.page-nav{
+        padding:10px;
+        background-color:#ccc;
+        margin-bottom:0px;
+ }
+ .back{
+width:100%;
+height:100%;
+background:url(http://pic1.bbzhi.com/huahuibizhi/rouguangsheying-menghuanweimeiyehuasheying/flower_pure_sweet_wildflowers_3_1920x1200_6035_10.jpg) left top;
+m	
+opacity:0.8;
+position:absolute;
+z-index:-1;
+background-repeat: no-repeat;
+	
+	}
+.opacity{
+	opacity:0.8;
+}
+.post{
+		margin-bottom:250px;
+		 margin-left: auto;
+		
+		margin-right: auto;	
+}
+.g1{
+	width:40%;
+	margin-left: auto;
+		margin-right: auto;
+}
+.g2{
+	width:70%;
+	height:120px;
+	margin-left: auto;
+		margin-right: auto;
+}
+.midel{
+width:80%;
+  margin-left: auto;
+		margin-right: auto;
+			
+}
+.show{
+			
+		margin-bottom:400px;
+		 margin-left: auto;
+		margin-right: auto;
+		}
+ .form{
+	 margin-left: auto;
+margin-right: auto;
+margin-top:130px;
+width:35%;
+ }
+.list_delete{
+	margin-top:160px;
+}
+.nav-username,
+.nav-register,
+.nav-login{
+        margin:0 10px;
+ }
+ .fix{
+	width:100%;
+	line-height:35px;
+	
+	position:fixed;
+	bottom:10px;
+	left:0px;
+	opacity:0.6;}

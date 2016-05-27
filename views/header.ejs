@@ -1,0 +1,25 @@
+﻿
+    <!DOCTYPE html>
+    <html>
+            <head>
+                  <meta charset="utf-8">
+                   <title>课程项目进度展示</title>
+                    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+                   <link rel="stylesheet" href="/bower_components/jquery/dist/jquery.min.js">
+					<link rel="stylesheet" href="/bower_components/bootstrap/dist/js/bootstrap.min.js">
+				   <link rel="stylesheet" href="/css/common.css">
+				   
+           </head>
+           <body>
+  <div class="clearfix page-nav">
+  <% if(user){%>
+	<div class="pull-left nav-username">欢迎您，<%= user.username %>!</div>
+	<div class="pull-left" ><a href="/post">发表</a></div>
+	<div class="pull-left  nav-username" ><a href="/list">我的主页</a></div>
+	<div class="pull-right nav-quit"><a href="/quit">退出</a></div>
+	<%}else{%>
+		<div class="pull-left nav-register" style="padding-left:30px"><a href="/">首页</a></div>
+          <div class="pull-right nav-register" style="padding-right:30px" ><a href="/register">注册</a></div>
+  <div class="pull-right nav-login" style="padding-right:30px"><a href="/login">登陆</a></div>
+  <%}%>
+  </div>

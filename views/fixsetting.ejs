@@ -1,0 +1,33 @@
+﻿
+<style type="text/css">
+
+.side-bar a,.chat-tips i {padding-left:5px;background: url(/image/back3.png) no-repeat; }
+.side-bar {width: 66px;position: fixed;top: 160px;right: 25px;font-size: 0;line-height: 0;z-index: 100;}
+.side-bar a {width: 66px;height: 66px;display: inline-block;background-color: #ddd;margin-bottom: 2px;}
+.side-bar a:hover {background-color: #669fdd;}
+.side-bar .icon-qq {background-position: 0 -62px;}
+.side-bar .icon-chat {background-position: 0 -130px;position: relative;}
+.side-bar .icon-blog {background-position: 0 -198px;}
+.side-bar .icon-mail {background-position: 0 -266px;}
+
+
+.side-bar .icon-chat:hover .chat-tips {display: block;}
+.chat-tips {padding: 20px;border: 1px solid #d1d2d6;position: absolute;right: 78px;top: -55px;background-color: #fff;display: none;}
+.chat-tips i {width: 9px;height: 16px;display: inline-block;position: absolute;right: -9px;top: 80px;background-position:-88px -350px;}
+.chat-tips img {width: 138px;height: 138px;}
+</style>
+<div class="side-bar">
+<a target="_blank" href="/test" class="icon-qq">发表</a>
+<a  class="icon-chat">娱乐
+<div class="chat-tips">
+<i></i>
+<img style="width:260px;height:210px;" id="chat" src="/image/ws.png" _fcksavedurl=""/image/chat.jpg"" alt="微信订阅号">
+</div>
+</a>
+<a target="_blank" href="/login" class="icon-blog">设置</a>
+<a target="_blank" href="/wsq">www > </a>
+
+</div>
+<script>
+ $("#chat").attr("src", "/image/chat.jpg");
+</script>
