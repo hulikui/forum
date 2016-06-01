@@ -614,7 +614,7 @@
 																	<span class="time"><%=topic.createTime%></span>
 
 																	<span class="summary">
-																		<span class="text">
+																		<span class="text">   <!-- 获取单个话题的ID隐藏input -->
 																			<input class="hide" value="<%= topic._id %>">
 																			<%=topic.title%>
 																		</span>
@@ -765,7 +765,7 @@
 									<!-- /section:pages/inbox.compose -->
 								</form>
 								 <% topics.forEach(function(topic,index){ %>
-								<div class="hide message-content <%=topic._id %>"  id="id-message-content">
+								<div class="hide message-content <%=topic._id %>"  id="id-message-content"><!-- 获取单个话题全部内容的ID-->
 									<!-- #section:pages/inbox.message-header -->
 									<div class="message-header clearfix">
 										<div class="pull-left">
@@ -810,12 +810,176 @@
 										
 									
 									</div>
+									<!-- /section:pages/inbox.message-body -->
+									<div class="hr hr-double"></div>
+									
+									<!-- 写 评论内容的div-->
+					<div class="comments">
+										
+										
+										
+										
+										
+						<div class="row">
+							
+								
+
+									<div class="col-sm-7 widget-container-col">
+										<div class="widget-box widget-color-dark">
+											<div class="widget-header">
+												<h6 class="widget-title">话题评论</h6>
+
+												<div class="widget-toolbar">
+													<a href="#" data-action="settings">
+														<i class="ace-icon fa fa-cog"></i>
+													</a>
+
+													<a href="#" data-action="reload">
+														<i class="ace-icon fa fa-refresh"></i>
+													</a>
+
+													<a href="#" data-action="collapse">
+														<i class="ace-icon fa fa-chevron-up"></i>
+													</a>
+
+													<a href="#" data-action="close">
+														<i class="ace-icon fa fa-times"></i>
+													</a>
+
+													<a href="#" data-action="fullscreen" class="orange2">
+														<i class="ace-icon fa fa-expand"></i>
+													</a>
+												</div>
+											</div>
+
+											<div class="widget-body">
+												<!-- #section:custom/scrollbar -->
+												<div class="widget-main padding-4 scrollable" data-size="220">
+													<div class="content">
+														
+														   
+											
+
+
+											<% topic.comments.forEach(function(comment,index){ %>
+													<div class="message-content" id="id-message-content">
+									<!-- #section:pages/inbox.message-header -->
+									<div class="message-header clearfix">
+										<div class="pull-left">
+											<span class="blue bigger-125"> 测试回复是否生效 </span>
+
+											<div class="space-4"></div>
+
+											<i class="ace-icon fa fa-star orange2"></i>
+
+											<%=index%>楼 &nbsp;
+											<img class="middle" alt="John's Avatar" src="/assets/avatars/avatar.png" width="32">
+											&nbsp;
+											<a href="#" class="sender"><%=comment.author%></a>
+
+											&nbsp;
+											<i class="ace-icon fa fa-clock-o bigger-110 orange middle"></i>
+											<span class="time grey"><%=comment.create_at%></span>
+										</div>
+
+										<div class="pull-right action-buttons">
+											<a href="#">
+												<i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+											</a>
+
+											<a href="#">
+												<i class="ace-icon fa fa-mail-forward blue icon-only bigger-130"></i>
+											</a>
+
+											<a href="#">
+												<i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
+											</a>
+										</div>
+									</div>
+
+									<!-- /section:pages/inbox.message-header -->
+									<div class="hr hr-double"></div>
+
+									<!-- #section:pages/inbox.message-body -->
+									<div class="message-body ace-scroll" style="position: relative;">
+									<div class="scroll-track scroll-visible" style="display: none;">
+									<div class="scroll-bar">
+									</div>
+									</div>
+									<div class="scroll-content">
+									<%-comment.content%>
+								</div>
+								</div>
 
 									<!-- /section:pages/inbox.message-body -->
 									<div class="hr hr-double"></div>
 
 								
+								</div>
+													
+								 <% }) %>
+
+											
+														   
+														   
+														
+													</div>
+												</div>
+
+												<!-- /section:custom/scrollbar -->
+											</div>
+										</div>
+									</div>
+						
+							<div class="col-sm-7">
+										<h4 class="header green">登录后可评论</h4>
+										
+										
+										<form  method="post" action="/reply/<%=topic._id %>" id="reply">
+										
+										<input class="hidden" value="<%=topic._id %>"   name="topic_id">
+										<div class="widget-box widget-color-blue">
+											<div class="widget-header widget-header-small">  </div>
+											
+											<div class="widget-body">
+												<div class="widget-main no-padding">
+													<textarea name="content" id="replyeditor" data-provide="markdown" data-iconlibrary="fa" rows="10"></textarea>
+												</div>
+											
+												<div class="widget-toolbox padding-4 clearfix">
+													<div class="btn-group pull-left">
+														<button class="btn btn-sm btn-info">
+															<i class="ace-icon fa fa-times bigger-125"></i>
+															Cancel
+														</button>
+													</div>
+
+													<div class="btn-group pull-right">
+														<button class="btn btn-sm btn-purple" type="submit" >
+															<i class="ace-icon fa fa-floppy-o bigger-125"></i>
+															发表
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+									
+									</div>
+												
+							
+							
+							</div>
+									
+							</div>
+								
+								
+									
+								
 								</div><!-- /.message-content -->
+								
+								
+								
 							 <% }) %>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
@@ -846,7 +1010,7 @@
 </script>
 <![endif]-->
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+			if('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
 		</script>
 		<script src="../assets/js/bootstrap.js"></script>
 
@@ -886,8 +1050,126 @@
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
+	
+	function getInnerHTML()
+  {
+  var content=document.getElementById("replyeditor").innerHTML;
+  console.log(content);
+  document.getElementById('replycontent').setAttribute('value',content);
+$('#reply').submit();
+  
+  }
+
+		
+
+</script>
+		<script type="text/javascript">
+	
+		
+		
+		
+		
 			jQuery(function($){
+						
+					//评论功能
+					$('#simple-colorpicker-1').ace_colorpicker({pull_right:true}).on('change', function(){
+					var color_class = $(this).find('option:selected').data('class');
+					var new_class = 'widget-box';
+					if(color_class != 'default')  new_class += ' widget-color-'+color_class;
+					$(this).closest('.widget-box').attr('class', new_class);
+				});
 			
+			
+				// scrollables
+				$('.scrollable').each(function () {
+					var $this = $(this);
+					$(this).ace_scroll({
+						size: $this.attr('data-size') || 150,
+						//styleClass: 'scroll-left scroll-margin scroll-thin scroll-dark scroll-light no-track scroll-visible'
+					});
+				});
+				$('.scrollable-horizontal').each(function () {
+					var $this = $(this);
+					$(this).ace_scroll(
+					  {
+						horizontal: true,
+						styleClass: 'scroll-top',//show the scrollbars on top(default is bottom)
+						size: $this.attr('data-size') || 400,
+						mouseWheelLock: true
+					  }
+					).css({'padding-top': 12});
+				});
+				
+				$(window).on('resize.scroll_reset', function() {
+					$('.scrollable-horizontal').ace_scroll('reset');
+				});
+			
+				
+				$('#id-checkbox-vertical').prop('checked', false).on('click', function() {
+					$('#widget-toolbox-1').toggleClass('toolbox-vertical')
+					.find('.btn-group').toggleClass('btn-group-vertical')
+					.filter(':first').toggleClass('hidden')
+					.parent().toggleClass('btn-toolbar')
+				});
+			
+				/**
+				//or use slimScroll plugin
+				$('.slim-scrollable').each(function () {
+					var $this = $(this);
+					$this.slimScroll({
+						height: $this.data('height') || 100,
+						railVisible:true
+					});
+				});
+				*/
+				
+			
+				/**$('.widget-box').on('setting.ace.widget' , function(e) {
+					e.preventDefault();
+				});*/
+			
+				/**
+				$('.widget-box').on('show.ace.widget', function(e) {
+					//e.preventDefault();
+					//this = the widget-box
+				});
+				$('.widget-box').on('reload.ace.widget', function(e) {
+					//this = the widget-box
+				});
+				*/
+			
+				//$('#my-widget-box').widget_box('hide');
+			
+				
+			
+				// widget boxes
+				// widget box drag & drop example
+			    $('.widget-container-col').sortable({
+			        connectWith: '.widget-container-col',
+					items:'> .widget-box',
+					handle: ace.vars['touch'] ? '.widget-header' : false,
+					cancel: '.fullscreen',
+					opacity:0.8,
+					revert:true,
+					forceHelperSize:true,
+					placeholder: 'widget-placeholder',
+					forcePlaceholderSize:true,
+					tolerance:'pointer',
+					start: function(event, ui) {
+						//when an element is moved, it's parent becomes empty with almost zero height.
+						//we set a min-height for it to be large enough so that later we can easily drop elements back onto it
+						ui.item.parent().css({'min-height':ui.item.height()})
+						//ui.sender.css({'min-height':ui.item.height() , 'background-color' : '#F5F5F5'})
+					},
+					update: function(event, ui) {
+						ui.item.parent({'min-height':''})
+						//p.style.removeProperty('background-color');
+					}
+			    });
+				
+				
+				
+				
 				//handling tabs and loading/displaying relevant messages and forms
 				//not needed if using the alternative view, as described in docs
 				$('#inbox-tabs a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -958,7 +1240,7 @@
 			
 				/////////($("#w3s").attr("href"));
 				
-				var index=
+				
 				//display first message in a new area
 				$('.message-list .message-item .text').on('click', function() {
 				//	获取index
@@ -1303,16 +1585,16 @@
 		</script>
 
 		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
-		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
-		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+		<link rel="stylesheet" href="/assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="/docs/assets/js/themes/sunburst.css" />
 
 		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
-		<script src="../assets/js/ace/elements.onpage-help.js"></script>
-		<script src="../assets/js/ace/ace.onpage-help.js"></script>
-		<script src="../docs/assets/js/rainbow.js"></script>
-		<script src="../docs/assets/js/language/generic.js"></script>
-		<script src="../docs/assets/js/language/html.js"></script>
-		<script src="../docs/assets/js/language/css.js"></script>
-		<script src="../docs/assets/js/language/javascript.js"></script>
+		<script src="/assets/js/ace/elements.onpage-help.js"></script>
+		<script src="/assets/js/ace/ace.onpage-help.js"></script>
+		<script src="/docs/assets/js/rainbow.js"></script>
+		<script src="/docs/assets/js/language/generic.js"></script>
+		<script src="/docs/assets/js/language/html.js"></script>
+		<script src="/docs/assets/js/language/css.js"></script>
+		<script src="/docs/assets/js/language/javascript.js"></script>
 	</body>
 </html>

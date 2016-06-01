@@ -6,6 +6,7 @@ var express = require('express')
 	,flash=require('express-flash')
     , app = express()
 	,crypto=require('crypto')
+	,markdown = require('markdown').markdown;
 
 var passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
@@ -33,6 +34,7 @@ var mongoose=require('mongoose');
   var models=require('./models/models');
   var User=models.User;
   var Topic=models.Topic;
+  var Reply=models.Reply;
   var dbUrl='mongodb://loaclhost:27017/forum';
   //使用mongoose连接服务器
   
@@ -147,7 +149,9 @@ app.get('/userInfo',function(req,res){
 		console.log(userInfos);
 		});
 });
+//查找话题数据
 app.get('/forum', function(req, res){
+	console.log(req.user);
 	var page = req.query.page ? parseInt(req.query.page) : 1;
 
       Topic.find(page,function (err,topics,total){
@@ -168,12 +172,18 @@ app.get('/forum', function(req, res){
   });
  
  app.get('/editor', function(req, res){
+	 var topic={
+			title:'点击编辑',
+			zonelabel:'选择编辑',
+			content:' ',
+			zone:'选择编辑'
+	 }
     res.render('editor', {
 		user: req.user,
 		topic : topic
 		});
   });
- app.get('/reditor/:id', function(req, res){
+ app.get('/editor/:id', function(req, res){
 	  //查找数据
 	  //在前端富文本插入内容数据
 	  console.log(req.params.id);
@@ -188,6 +198,26 @@ app.get('/forum', function(req, res){
               success: req.flash('success').toString(),
               error: req.flash('error').toString()
           });
+      });
+   
+  });
+ app.post('/editor/:id', function(req, res){
+	  //更新数据
+	  //在前端富文本插入内容数据
+	  console.log(req.params.id);
+	  var updateInfo={
+			title:req.body.title,
+			zonelabel:req.body.zonelabel,
+			content:req.body.content,
+			zone:req.body.zone 
+	  }
+	  Topic.update(req.params.id,updateInfo,function(err){
+          if(err) {
+              req.flash('err',err);
+              res.redirect('/');
+          }
+		  console.log('更新话题成功');
+          res.redirect('/users');
       });
    
   });
@@ -210,6 +240,35 @@ app.get('/forum', function(req, res){
 			return res.redirect('/users');
 		});
 		
+ });
+ //评论的发表 找到话题 插入push话题评论
+ app.post('/reply/:_id',function(req,res){
+			var docs	= req.body.content;
+			
+                        docs = markdown.toHTML(docs);
+                   
+	//对markdown格式进行解析
+	var topicID=req.body.topic_id;
+	 var reply=new Reply({
+		 content:docs,
+		 topic_id:topicID,     //req.params.id,
+		 author:req.user.username,
+		 author_id:req.user.studentId
+		 
+	 });
+	 console.log('回复的内容：',reply);
+	
+	 Topic.update(topicID, {$push: {comments: reply}}, {upsert:true},function(err){
+			if(err){
+				console.log('err');
+				return res.redirect('/forum');
+			}
+			
+			console.log('评论发表成功！');
+			return res.redirect('/forum');
+		});
+	
+	 
  });
 app.get('/task', function(req, res){
     res.render('task', { user: req.user });

@@ -148,7 +148,8 @@
 											<label class="col-sm-3  no-padding-right label label-primary" style="width:50px"for="form-field-recipient">所属:</label>
 									<div class="col-xs-12 col-sm-9">
 											<!-- #section:plugins/input.multiselect -->
-											<select class="chosen-select form-control" name="zone" style="width:150px" id="form-field-select-3" prompt="<%= topic.zone %>">
+											<select class="chosen-select form-control" name="zone" style="width:150px" id="form-field-select-3" >
+												<option selected value="<%= topic.zone %>"><%= topic.zone %> </option>
 												<option value="科技苑">科技苑</option>
 												<option value="经管苑">经管苑</option>
 												<option value="求知苑">求知苑</option>
@@ -166,9 +167,9 @@
 
 										<div class="col-xs-12 col-sm-9">
 											<!-- #section:plugins/input.multiselect -->
-											<select class="chosen-select form-control" name="zonelabel" style="width:150px" id="form-field-select-3" prompt="<%= topic.zonelabel %> ">
+											<select class="chosen-select form-control" name="zonelabel" style="width:150px" id="form-field-select-3">
 											
-												
+												<option selected value="<%= topic.zonelabel %>"><%= topic.zonelabel %> </option>
 												<option value="学习天地">学习天地</option>
 												<option value="跳槽市场">讲座信息</option>
 												<option value="实习内推">实习内推</option>

@@ -369,7 +369,7 @@
 						{name:'pv',index:'pv',width:50, editable:false,sorttype:"int"},
 						{name:'_id',index:'_id', width:50, editable: false,key:true},
 						{name:'_id',index:'_id', width:70, editable: false,formatter:function(cellvalue, options, rowObject){
-							var temp="<a type='button' class='btn btn-info' href='/reditor/"+cellvalue+"'>点击编辑</a>"
+							var temp="<a type='button' class='btn btn-info' href='/editor/"+cellvalue+"'>点击编辑</a>"
 							return temp;
 							}},
 						{name:'content',index:'content', width:150,sortable:false,editable: true,edittype:"wysiwyg-editor", editoptions:{rows:"10",cols:"11"},formatter:function(cellvalue, options, rowObject){
