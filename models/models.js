@@ -62,8 +62,25 @@ replySchema.plugin(autoIncrement.plugin, {
 		  comments:[replySchema]//注意数据库的设计问题
   }
   );
- 
+
+ var activitySchema=new Schema({
+	 id:String,
+	 title:String,
+	 start:String,
+	 end:String,
+	 className:String,
+	 builder:String,//发起者
+	 event:String,//事件内容
+	 favorer:[],//投票者
+	 objector:[],//反对者
+	 hits:{type:Number,default: 0},//围观数
+	 allDay:{
+		 type:Boolean,
+		 default:true
+	 } 
+ });
 
  exports.User=mongoose.model('User',userSchema);
  exports.Topic=mongoose.model('Note',topicSchema);
 exports.Reply=mongoose.model('Reply',replySchema);
+exports.Activity=mongoose.model('Activity',activitySchema);

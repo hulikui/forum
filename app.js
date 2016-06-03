@@ -35,6 +35,7 @@ var mongoose=require('mongoose');
   var User=models.User;
   var Topic=models.Topic;
   var Reply=models.Reply;
+  var Activity=models.Activity;
   var dbUrl='mongodb://loaclhost:27017/forum';
   //使用mongoose连接服务器
   
@@ -270,6 +271,89 @@ app.get('/forum', function(req, res){
 	
 	 
  });
+ app.get('/calendar', function(req, res){
+    res.render('calendar', { user: req.user });//CanAddEvent
+  });
+ app.get('/calendars', function(req, res){
+     Activity.find(function(err,activitys){
+			//console.log('获取所有活动',activitys);
+			res.jsonp(activitys);
+		});
+  }); 
+ app.post('/addCalEvent',function(req,res)//app.post('/flow/save', require('body-parser').json(), traffic);
+  {       
+		
+		var activity=new Activity({
+			builder:req.user.username,
+			event:req.body.event,
+			title:req.body.title,
+			start:req.body.start,
+			end:req.body.end,
+			className:req.body.className
+			
+		});
+		console.log(activity);
+		
+		activity.save(function(err,doc){
+			if(err){
+				console.log('err');
+				return res.redirect('/calendars');
+			}
+			console.log('插入活动成功',activity._id);
+			Activity.update({_id:activity._id},{id:activity._id},function(err){
+				console.log('更新ID成功',err);
+			});
+			return res.redirect('/calendars');
+		});
+		
+ });
+  app.post('/updateCalEvent/:_id',function(req,res)//app.post('/flow/save', require('body-parser').json(), traffic);
+  {     var id=req.body.id;
+		
+		console.log(req.body);
+		if(req.body.vote=="favorer"){
+			Activity.update({_id:req.params._id}, {$push: {favorer: req.user.studentId}},function(err){
+			if(err){
+				console.log('err');
+				return res.redirect('/calendar');
+			}
+			
+			console.log('投票测试');
+			return res.redirect('/calendar');
+		});
+		}else{
+			Activity.update({_id:req.params._id}, {$push: {objector: req.user.studentId}},function(err){
+			if(err){
+				console.log('err');
+				return res.redirect('/calendar');
+			}
+			
+			console.log('投票测试');
+			return res.redirect('/calendar');
+		});
+		}
+		
+		
+		
+ });
+ app.post('/delCalEvent/:_id',function(req,res)//app.post('/flow/save', require('body-parser').json(), traffic);
+  {      
+		var id=req.body;//body提供的是Json格式的ID 但是req.params.id 获取的是字符串 mongoose无法自动转为为ObjectId  mogondb会自动转换
+		
+		console.log('后台删除ID',id);
+		Activity.findByIdAndRemove({_id:req.body._id},function(err){
+					 if(err){
+						 console.log(err);
+						  req.flash('error',err);
+						  return res.redirect('/calendars');
+					 }
+					req.flash('success','活动删除成功');
+					console.log("活动删除成功");
+					return res.redirect('/calendars');
+				});
+		
+ });
+  
 app.get('/task', function(req, res){
     res.render('task', { user: req.user });
   });

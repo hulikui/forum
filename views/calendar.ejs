@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<% include mainheader%>
+				<!-- #section:basics/sidebar.layout.minimize -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<!-- /section:basics/sidebar.layout.minimize -->
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				</script>
+			</div>
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<li class="active">Calendar</li>
+						</ul><!-- /.breadcrumb -->
+
+						<!-- #section:basics/content.searchbox -->
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- /.nav-search -->
+
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+						<!-- #section:settings.box -->
+						<div class="ace-settings-container" id="ace-settings-container">
+							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+								<i class="ace-icon fa fa-cog bigger-130"></i>
+							</div>
+
+							<div class="ace-settings-box clearfix" id="ace-settings-box">
+								<div class="pull-left width-50">
+									<!-- #section:settings.skins -->
+									<div class="ace-settings-item">
+										<div class="pull-left">
+											<select id="skin-colorpicker" class="hide">
+												<option data-skin="no-skin" value="#438EB9">#438EB9</option>
+												<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+												<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+												<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+											</select>
+										</div>
+										<span>&nbsp; Choose Skin</span>
+									</div>
+
+									<!-- /section:settings.skins -->
+
+									<!-- #section:settings.navbar -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+										<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+									</div>
+
+									<!-- /section:settings.navbar -->
+
+									<!-- #section:settings.sidebar -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+										<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+									</div>
+
+									<!-- /section:settings.sidebar -->
+
+									<!-- #section:settings.breadcrumbs -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+										<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+									</div>
+
+									<!-- /section:settings.breadcrumbs -->
+
+									<!-- #section:settings.rtl -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+										<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+									</div>
+
+									<!-- /section:settings.rtl -->
+
+									<!-- #section:settings.container -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+										<label class="lbl" for="ace-settings-add-container">
+											Inside
+											<b>.container</b>
+										</label>
+									</div>
+
+									<!-- /section:settings.container -->
+								</div><!-- /.pull-left -->
+
+								<div class="pull-left width-50">
+									<!-- #section:basics/sidebar.options -->
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" />
+										<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" />
+										<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" />
+										<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+									</div>
+
+									<!-- /section:basics/sidebar.options -->
+								</div><!-- /.pull-left -->
+							</div><!-- /.ace-settings-box -->
+						</div><!-- /.ace-settings-container -->
+
+						<!-- /section:settings.box -->
+						<div class="page-header">
+							<h1>
+								Full Calendar
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									按住日历空白处连续拖拽即可建立持续活动
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-sm-9">
+										<div class="space"></div>
+
+										<!-- #section:plugins/data-time.calendar -->
+										<div id="calendar"></div>
+
+										<!-- /section:plugins/data-time.calendar -->
+									</div>
+
+									<div class="col-sm-3">
+										<div class="widget-box transparent">
+											<div class="widget-header">
+												<h4>拖拽和修改模块有BUG</h4>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main no-padding">
+													<div id="external-events">
+														<div class="external-event label-grey" data-class="label-grey">
+															<i class="ace-icon fa fa-arrows"></i>
+															灰色标记
+														</div>
+
+														<div class="external-event label-success" data-class="label-success">
+															<i class="ace-icon fa fa-arrows"></i>
+															绿色标记
+														</div>
+
+														<div class="external-event label-danger" data-class="label-danger">
+															<i class="ace-icon fa fa-arrows"></i>
+															红色标记
+														</div>
+
+														<div class="external-event label-purple" data-class="label-purple">
+															<i class="ace-icon fa fa-arrows"></i>
+															紫色标记
+														</div>
+
+														<div class="external-event label-yellow" data-class="label-yellow">
+															<i class="ace-icon fa fa-arrows"></i>
+															黄色标记
+														</div>
+
+														<div class="external-event label-pink" data-class="label-pink">
+															<i class="ace-icon fa fa-arrows"></i>
+															紫红标记
+														</div>
+
+														<div class="external-event label-info" data-class="label-info">
+															<i class="ace-icon fa fa-arrows"></i>
+															蓝色标记
+														</div>
+
+														<label>
+															<input type="checkbox" class="ace ace-checkbox" id="drop-remove" />
+															<span class="lbl"> Remove after drop</span>
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			<% include mainfooter%>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='/assets/js/jquery.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/assets/js/jquery1x.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+		</script>
+		<script src="/assets/js/bootstrap.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<script src="/assets/js/jquery-ui.custom.js"></script>
+		<script src="/assets/js/jquery.ui.touch-punch.js"></script>
+		<script src="/assets/js/date-time/moment.js"></script>
+		<script src="/assets/js/fullcalendar.js"></script>
+		<script src="/assets/js/bootbox.js"></script>
+
+		<!-- ace scripts -->
+		<script src="/assets/js/ace/elements.scroller.js"></script>
+		<script src="/assets/js/ace/elements.colorpicker.js"></script>
+		<script src="/assets/js/ace/elements.fileinput.js"></script>
+		<script src="/assets/js/ace/elements.typeahead.js"></script>
+		<script src="/assets/js/ace/elements.wysiwyg.js"></script>
+		<script src="/assets/js/ace/elements.spinner.js"></script>
+		<script src="/assets/js/ace/elements.treeview.js"></script>
+		<script src="/assets/js/ace/elements.wizard.js"></script>
+		<script src="/assets/js/ace/elements.aside.js"></script>
+		<script src="/assets/js/ace/ace.js"></script>
+		<script src="/assets/js/ace/ace.ajax-content.js"></script>
+		<script src="/assets/js/ace/ace.touch-drag.js"></script>
+		<script src="/assets/js/ace/ace.sidebar.js"></script>
+		<script src="/assets/js/ace/ace.sidebar-scroll-1.js"></script>
+		<script src="/assets/js/ace/ace.submenu-hover.js"></script>
+		<script src="/assets/js/ace/ace.widget-box.js"></script>
+		<script src="/assets/js/ace/ace.settings.js"></script>
+		<script src="/assets/js/ace/ace.settings-rtl.js"></script>
+		<script src="/assets/js/ace/ace.settings-skin.js"></script>
+		<script src="/assets/js/ace/ace.widget-on-reload.js"></script>
+		<script src="/assets/js/ace/ace.searchbox-autocomplete.js"></script>
+
+		<!-- inline scripts related to this page -->
+		
+<script type="text/javascript">
+			jQuery(function($) {
+
+/* initialize the external events
+	-----------------------------------------------------------------*/
+
+	$('#external-events div.external-event').each(function() {
+
+		// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+		// it doesn't need to have a start or end
+		var eventObject = {
+			title: $.trim($(this).text()) // use the element's text as the event title
+		};
+
+		// store the Event Object in the DOM element so we can get to it later
+		$(this).data('eventObject', eventObject);
+
+		// make the event draggable using jQuery UI
+		$(this).draggable({
+			zIndex: 999,
+			revert: true,      // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
+		
+	});
+
+
+
+
+	/* initialize the calendar
+	-----------------------------------------------------------------*/
+
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+
+
+	var calendar = $('#calendar').fullCalendar({
+		//isRTL: true,
+		//firstDay: 1,// >> change first day of week 
+		
+		 buttonHtml: {
+			prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+			next: '<i class="ace-icon fa fa-chevron-right"></i>'
+		},
+	
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		events:'/calendars'
+		,
+		
+		/**eventResize: function(event, delta, revertFunc) {
+
+			alert(event.title + " end is now " + event.end.format());
+
+			if (!confirm("is this okay?")) {
+				revertFunc();
+			}
+
+		},*/
+		
+		editable: true,
+		droppable: true, // this allows things to be dropped onto the calendar !!!
+		drop: function(date) { // this function is called when something is dropped
+				
+			// retrieve the dropped element's stored Event Object
+			var originalEventObject = $(this).data('eventObject');
+			var $extraEventClass = $(this).attr('data-class');
+			
+			
+			// we need to copy it, so that multiple events don't have a reference to the same object
+			var copiedEventObject = $.extend({}, originalEventObject);
+			
+			// assign it the date that was reported
+			copiedEventObject.start = date;
+			copiedEventObject.allDay = false;
+			if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+			
+			// render the event on the calendar
+			// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+			$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+			console.log('拖拽新建事件',copiedEventObject);
+			
+				var dragInfo={
+							title: copiedEventObject.title,
+							start: DateUtil.Format("yyyy/MM/dd", copiedEventObject.start),
+							//end: DateUtil.Format("yyyy/MM/dd", copiedEventObject.end),
+							allDay: copiedEventObject.allDay,
+							className: copiedEventObject.className[0]
+						
+					
+					};
+				console.log('拖拽新建事件',dragInfo);
+				$.post('/addCalEvent',dragInfo);
+				//calendar.fullCalendar('refetchEvents');	
+			// is the "remove after drop" checkbox checked?
+			if ($('#drop-remove').is(':checked')) {
+				// if so, remove the element from the "Draggable Events" list
+				$(this).remove();
+			}
+			
+		}
+		,
+		selectable: true,
+		selectHelper: true,
+		select: function(start, end, allDay, jsEvent, view ) {
+			var radios = "<div class='radios'>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-info' name='code' checked><span class='lbl'style='color:#3a87ad'>蓝色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-grey' name='code'><span class='lbl'style='color:#abbac3'>灰色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-success' name='code'><span class='lbl'style='color:#82af6f'>绿色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-danger' name='code'><span class='lbl'style='color:#d15b47'>红色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-purple' name='code'><span class='lbl'style='color:#9585bf'>紫色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-yellow' name='code'><span class='lbl'style='color:#fee188'>黄色</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-pink' name='code'><span class='lbl'style='color:#d6487e'>粉红</span></label>\n\
+<label class='label_canlendar'><input class='ace' type='radio' value='label-info' name='code'><span class='lbl'style='color:#00c0ef'>青色</span></label>\n\
+</div>";
+	
+    bootbox.dialog({
+        title: "新建活动.",
+        message: '<div class="row">  ' +
+          '<div class="col-md-12"> ' +
+          '<form class="form-horizontal"> ' +
+          '<div class="form-group"> ' +
+          '<label class="col-md-4 control-label" for="name">活动事件</label> ' +
+          '<div class="col-md-4"> ' +
+          '<input id="newname" name="newname" type="text" placeholder="点击编辑" class="form-control input-md"></div> ' +
+		'</div>' +
+		'<div class="form-group"> ' +
+          '<label class="col-md-4 control-label" for="awesomeness">活动简介</label> ' +
+          '<div class="col-md-4"> ' +
+          '<textarea id="newevent" name="newevent" type="text" class="form-control "></textarea> ' +
+          '<span class="help-block" style="padding-top:15px">下面为颜色标记</span> </div> ' +
+          '</div> ' +
+          ' '+radios+ '' +
+          '</form> </div>  </div>',
+        buttons: {
+          success: {
+            label: "Save",
+            className: "btn-success",
+            callback: function () {
+              var name = $('#newname').val();
+			  var event = $('#newevent').val();
+              var answer = $("input[name='code']:checked").val();
+			  var info={
+							title: name,
+							start: DateUtil.Format("yyyy/MM/dd", start),
+							//end: DateUtil.Format("yyyy/MM/dd", end),
+							allDay: true,
+							className: answer,
+							event:event
+						
+					
+					};
+				console.log(info);
+				$.post('/addCalEvent',info);
+				
+				calendar.fullCalendar('refetchEvents');	
+             // alert("Hello " + name + ". Your content " + event + "</b>");
+            }
+          }
+        }
+      }
+    );
+		/*	bootbox.prompt("新建事件:", function(title) {
+				if (title !== null) {
+					
+					
+					
+					console.log(info);
+					$.post('/addCalEvent',info);
+					//调用一次刷新事件防止修改ID为当前网页的临时ID
+						
+				}
+			});*/
+			
+			calendar.fullCalendar('unselect');	
+			
+		}
+		,
+		eventDrop:function(event,dayDelta,minuteDelta,allDay,revertFunc) { 
+		console.log('拖拽引起的修改',event);
+		
+        $.post("/updateCalEvent",{id:event._id,title:event.title,start:DateUtil.Format("yyyy/MM/dd", event.start),className:event.className[0]}); 
+		calendar.fullCalendar('refetchEvents');	
+		},
+		/*dayClick: function(calEvent,start,view) {
+
+			//moment().subtract(3, 'days').calendar()
+			console.log('新建',calEvent.add(3, 'days').calendar());
+			console.log(start);
+			console.log(view);
+			 //$.post('/addCalEvent/',calEvent);
+		},*/		
+		eventClick: function(calEvent, jsEvent, view) {
+				console.log(calEvent);
+				var a=calEvent.favorer.length;
+				var b=calEvent.objector.length;
+				if(b==0){
+				
+				var supportrate=100;
+				}else{
+				
+				var supportrate= (a/(a+b)).toFixed(2)*100;
+				var objectorate=100-supportrate;
+				}
+			
+			//display a modal
+			var modal = 
+			'<div class="modal fade">\
+			  <div class="modal-dialog">\
+			   <div class="modal-content">\
+				 <div class="modal-body">\
+				   <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
+				   <form class="no-margin form-horizontal">\
+					  <div class="row"> \
+          <div class="col-md-12">  \
+		  <div class="form-group"> \
+			  <label class="col-md-4 control-label" for="name">活动主题 &nbsp;</label> \
+			  <div class="col-md-4"> \
+			  <input id="name" name="title" type="text" value="' + calEvent.title + '" readonly class="form-control input-md"> \
+			  <span class="help-block">活动发起者：' + calEvent.builder + '</span> </div> \
+          </div> \
+          <div class="form-group"> \
+          <label class="col-md-4 control-label" for="name">活动简介</label> \
+          <div class="col-md-4"> \
+          <textarea id="event" name="event" type="text" readonly class="form-control">' + calEvent.event + '</textarea> \
+          <span class="help-block">备注</span> </div> \
+          </div> \
+          <div class="form-group"> \
+          <label class="col-md-4 control-label" for="awesomeness">选项</label> \
+          <div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> \
+          <input type="radio" name="vote" id="awesomeness-0" value="favorer" checked="checked"> \
+          赞成or参加 </label> \
+          </div><div class="radio"> <label for="awesomeness-1"> \
+          <input type="radio" name="vote" id="awesomeness-1" value="objector"> 反对or不参加 </label> \
+          </div> \
+          </div> </div>\
+         </div>  </div>\
+		  <div class="form-group">\
+		    <label class="col-md-4 control-label" for="awesomeness">投票情况</label> \
+			<div class="col-md-6"> \
+					<div class="progress">\
+   <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	style="width: '+supportrate+'%;">\
+	 <span class="">'+supportrate+'% ('+a+'人次)支持</span>\
+  </div>\
+</div>\
+<div class="progress">\
+   <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+objectorate+'%;">\
+      <span class="sr-only">20% 完成（警告）</span>\
+   </div>\
+</div></div></div>\
+					<span class="label label-warning">目前已有'+(a+b)+'人参与投票 &nbsp;&nbsp;</span><button type="submit" class="btn btn-sm btn-success pull-right" ><i class="ace-icon fa fa-check"></i> Save</button>\
+				   </form>\
+				 </div>\
+				 <div class="modal-footer">\
+					<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
+					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+				 </div>\
+			  </div>\
+			 </div>\
+			</div>';
+		
+		//<label class="btn btn-success" for="name">参加or支持人数：</label>' + calEvent.favorer.length + '，<label class="btn btn-danger" for="name">反对or不参加人数：</label>' + calEvent.objector.length + ' ，支持率：<label class="btn btn-warning">'+supportrate+' </label>% &nbsp;</label> 
+					
+			var modal = $(modal).appendTo('body');
+			modal.find('form').on('submit', function(ev){
+				ev.preventDefault();//提交投票事件 不再提交修改事件
+				var vote = $("input[name=vote]:checked").val();
+				//calEvent.title = $(this).find("input[type=text]").val();
+				//calendar.fullCalendar('updateEvent', calEvent);//提交事件
+				console.log('修改前',calEvent);
+				var updateInfo={
+					id:calEvent.id,
+					title:calEvent.title,
+					vote:vote,
+					start:DateUtil.Format("yyyy/MM/dd", calEvent.start),
+					//end: DateUtil.Format("yyyy/MM/dd hh:mm:ss", calEvent.start),
+					className: calEvent.className[0]
+				}
+				console.log('修改后',updateInfo);
+				 $.post('/updateCalEvent/'+calEvent._id+'',updateInfo);
+				calendar.fullCalendar('refetchEvents');	
+				modal.modal("hide");
+			});
+			modal.find('button[data-action=delete]').on('click', function() {
+				calendar.fullCalendar('removeEvents' , function(ev){//删除事件
+					return (ev._id == calEvent._id);
+				})
+				console.log(calEvent._id);
+				var id={
+					_id:calEvent._id
+				}
+				$.post('/delCalEvent/"'+calEvent._id+'"',id);
+				modal.modal("hide");
+			});
+			
+			modal.modal('show').on('hidden', function(){
+				modal.remove();
+			});
+
+
+			//console.log(calEvent._id);
+			//console.log(jsEvent);
+			//console.log(view);
+
+			// change the border color just for fun
+			//$(this).css('border-color', 'red');
+
+		}
+		
+	});
+
+
+})
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="../assets/js/ace/elements.onpage-help.js"></script>
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

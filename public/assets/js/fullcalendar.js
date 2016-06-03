@@ -9584,7 +9584,7 @@ function EventManager(options) { // assumed to be a calendar
 			event.end = null;
 		}
 
-		mutateEvent(event, getMiscEventProps(event)); // will handle start/end/allDay normalization
+		//mutateEvent(event); // will handle start/end/allDay normalization
 		reportEvents(cache); // reports event modifications (so we can redraw)
 	}
 
