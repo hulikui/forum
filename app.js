@@ -188,7 +188,7 @@ app.get('/forum', function(req, res){
 	  //查找数据
 	  //在前端富文本插入内容数据
 	  console.log(req.params.id);
-	  Topic.findOne(req.params.id,function(err,topic){
+	  Topic.findOne({_id:req.params.id},function(err,topic){
           if(err) {
               req.flash('err',err);
               res.redirect('/');
@@ -212,7 +212,7 @@ app.get('/forum', function(req, res){
 			content:req.body.content,
 			zone:req.body.zone 
 	  }
-	  Topic.update(req.params.id,updateInfo,function(err){
+	  Topic.update({_id:req.params.id},updateInfo,function(err){
           if(err) {
               req.flash('err',err);
               res.redirect('/');
@@ -259,7 +259,7 @@ app.get('/forum', function(req, res){
 	 });
 	 console.log('回复的内容：',reply);
 	
-	 Topic.update(topicID, {$push: {comments: reply}}, {upsert:true},function(err){
+	 Topic.update({_id:topicID}, {$push: {comments: reply}}, {upsert:true},function(err){
 			if(err){
 				console.log('err');
 				return res.redirect('/forum');
@@ -309,7 +309,7 @@ app.get('/forum', function(req, res){
  });
   app.post('/updateCalEvent/:_id',function(req,res)//app.post('/flow/save', require('body-parser').json(), traffic);
   {     var id=req.body.id;
-		
+		//要用对象去匹配ID
 		console.log(req.body);
 		if(req.body.vote=="favorer"){
 			Activity.update({_id:req.params._id}, {$push: {favorer: req.user.studentId}},function(err){
@@ -468,13 +468,13 @@ app.post('/update',function(req,res){
 			//检查编辑状态
 			if(req.body.oper=="edit"){
 				console.log(req.body);
-				var _id=req.body._id;
+				var id=req.body._id;
 				var updatecontent={
 					title:req.body.title,
 					zone:req.body.zone,
 					zonelabel:req.body.zonelabel,
 				}
-				Topic.update(_id,updatecontent,function(err){
+				Topic.update({_id:id},updatecontent,function(err){
 					 if(err){
 						  req.flash('error',err);
 						  return res.redirect('/');

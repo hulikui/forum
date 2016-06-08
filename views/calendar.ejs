@@ -478,11 +478,15 @@
 				var a=calEvent.favorer.length;
 				var b=calEvent.objector.length;
 				if(b==0){
-				
+				var objectorate=0;
 				var supportrate=100;
 				}else{
+				var m=a/(a+b);
 				
-				var supportrate= (a/(a+b)).toFixed(2)*100;
+				var supportrate= Math.round(m*100);
+				
+				
+				//alert(supportrate);
 				var objectorate=100-supportrate;
 				}
 			
@@ -511,7 +515,7 @@
           <div class="form-group"> \
           <label class="col-md-4 control-label" for="awesomeness">选项</label> \
           <div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> \
-          <input type="radio" name="vote" id="awesomeness-0" value="favorer" checked="checked"> \
+          <input type="radio" name="vote" id="awesomeness-0" value="favorer" > \
           赞成or参加 </label> \
           </div><div class="radio"> <label for="awesomeness-1"> \
           <input type="radio" name="vote" id="awesomeness-1" value="objector"> 反对or不参加 </label> \
@@ -528,7 +532,7 @@
 </div>\
 <div class="progress">\
    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+objectorate+'%;">\
-      <span class="sr-only">20% 完成（警告）</span>\
+      <span class="">'+objectorate+'% '+b+'人反对</span>\
    </div>\
 </div></div></div>\
 					<span class="label label-warning">目前已有'+(a+b)+'人参与投票 &nbsp;&nbsp;</span><button type="submit" class="btn btn-sm btn-success pull-right" ><i class="ace-icon fa fa-check"></i> Save</button>\
@@ -547,7 +551,8 @@
 			var modal = $(modal).appendTo('body');
 			modal.find('form').on('submit', function(ev){
 				ev.preventDefault();//提交投票事件 不再提交修改事件
-				var vote = $("input[name=vote]:checked").val();
+				var vote = $(this).find("input[name='vote']:checked").val();//$('input:radio[name="vote"]:checked').val();
+				console.log('点击',vote);
 				//calEvent.title = $(this).find("input[type=text]").val();
 				//calendar.fullCalendar('updateEvent', calEvent);//提交事件
 				console.log('修改前',calEvent);
