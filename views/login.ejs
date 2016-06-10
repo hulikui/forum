@@ -2,7 +2,7 @@
 <html>
   <head>
   
-  <meta property="qc:admins" content="0170367227633672556470" />
+ <!--> <meta property="qc:admins" content="0170367227633672556470" /><-->
   <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -52,7 +52,7 @@
 									<span class="red">软微</span>
 									<span class="white" id="id-text2">精神家园</span>
 								</h1>
-								<h4 class="blue" id="id-company-text">&copy; hulikui</h4>
+								<h4 class="blue" id="id-company-text">&copy; 微信登陆请使用谷歌浏览器</h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -67,10 +67,9 @@
 											</h4>
 
 											<div class="space-6"></div>
-											
-											<%- message %>
-											
-											<form method="post" action="/login">
+	<%if(message){%>
+	<span class="label label-warning"><%= message %></span>				<%}%>	
+<form method="post" action="/login">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -110,12 +109,12 @@
 
 											<div class="space-6"></div>
 
-											<div class="social-login center">
-												<a class="btn btn-primary" >
+											<div class="social-login center" >
+												<a class="btn btn-primary" href=" https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id=wx1d3765eb45497a18&redirect_uri=http%3A%2F%2Fwww.ssforum.top%2Fauth%2Fwechat%2Fcallback&state=state&usertype=all" >
 													<i class="ace-icon fa fa-wechat"></i>
 												</a>
 
-												<a class="btn btn-info">
+												<a class="btn btn-info" href="/auth/qq">
 													<i class="ace-icon fa fa-qq"></i>
 												</a>
 
@@ -195,44 +194,44 @@
 											<div class="space-6"></div>
 											<p> Enter your details to begin: </p>
 
-											<form method="post" action="/register">
+											<form method="post" name="form1" action="/register">
 												<fieldset>
-													<label class="block clearfix">
+													<label class="block clearfix" id="emi">
 														<span class="block input-icon input-icon-right">
-															<input type="email" name="email" class="form-control" placeholder="邮箱" />
+															<input type="email" name="email" class="form-control" id="email" placeholder="邮箱" onBlur="checkEmail(this.value)" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 													</label>
 
-													<label class="block clearfix">
+													<label class="block clearfix" id="num">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="studentId" class="form-control" placeholder="学号"/>
+															<input type="text" id="number" name="studentId" class="form-control" onBlur="checkNumber(this.value)"  placeholder="学号"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
-													<label class="block clearfix">
+													<label class="block clearfix" id="use">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="username" class="form-control" placeholder="姓名"/>
+															<input type="text" id="user" name="username" class="form-control" onBlur="checkUser(this.value)" placeholder="姓名"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
-													<label class="block clearfix">
+													<label class="block clearfix" id="gra">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="grade" class="form-control" placeholder="行政苑"/>
+															<input type="text" id="grade" name="grade" onBlur="checkGrade(this.value)" class="form-control" placeholder="行政苑"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
-													<label class="block clearfix">
+													<label class="block clearfix" id="pw">
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="password" class="form-control" placeholder="密码" />
+															<input type="password" onBlur="checkpwd(this.value)" id="pwd" name="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
 
-													<label class="block clearfix">
+													<label class="block clearfix" id="rpw">
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="passwordRepeat" class="form-control" placeholder="密码确认" />
+															<input type="password" onBlur="checkRpwd(this.value)" id="rpwd" name="passwordRepeat" class="form-control" placeholder="密码确认" />
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
 													</label>
@@ -253,7 +252,7 @@
 															<span class="bigger-110">重置</span>
 														</button>
 
-														<button type="submit" class="width-65 pull-right btn btn-sm btn-success">
+														<button type="submit" name="sub" class="width-65 pull-right btn btn-sm btn-success">
 															<span class="bigger-110">注册</span>
 
 															<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -310,6 +309,102 @@
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
 		</script>
+
+
+<script type="text/javascript">
+    function checkUser(va){
+	var reg=/^[\u4e00-\u9fa5]{2,4}$/;
+            if(!reg.test(va)){
+				document.getElementById("user").value="";
+				$("#use").addClass("has-error");
+				document.getElementById("user").setAttribute("placeholder","用户名必须为3-4位汉字");
+				 document.form1.sub.disabled=true;
+			}else{
+                    $("#use").removeClass("has-error");
+                    document.form1.sub.disabled=false;
+   }      
+        }
+		function checkGrade(va){
+	var reg=/^[\u4e00-\u9fa5]{3}$/;
+            if(!reg.test(va)){
+				document.getElementById("grade").value="";
+				$("#gra").addClass("has-error");
+				document.getElementById("grade").setAttribute("placeholder","班级格式为:科技一，三位汉字");
+				 document.form1.sub.disabled=true;
+			}else{
+                    $("#gra").removeClass("has-error");
+                    document.form1.sub.disabled=false;
+   }      
+        }
+		function checkNumber(va){
+		var reg= /^[0-9]{10}$/;   
+			 if(va.length!=10){
+				document.getElementById("number").value="";
+				$("#num").addClass("has-error");
+				 document.getElementById("number").setAttribute("placeholder","学号必须为10位数字");
+				document.form1.sub.disabled=true;
+			
+			}else{
+           $("#num").removeClass("has-error");
+            document.form1.sub.disabled=false;
+            }   
+		}
+    function checkpwd(va){
+        if(va==""){
+			document.getElementById("pwd").value="";
+			$("#pw").addClass("has-error");
+			document.getElementById("pwd").setAttribute("placeholder","密码不能为空");
+           
+            document.form1.sub.disabled=true;
+        }else{
+			$("#pw").removeClass("has-error");
+            document.form1.sub.disabled=false;
+            }                       
+    }
+    function checkRpwd(va){
+        var pwd=document.getElementById("pwd").value;
+        if(va==""){
+			document.getElementById('rpwd').value="";
+			$("#rpw").addClass("has-error");
+			document.getElementById("rpwd").setAttribute("placeholder","密码不能为空");
+            
+            document.form1.sub.disabled=true;
+        }else{
+           $("#rpw").removeClass("has-error");
+            document.form1.sub.disabled=false;
+            }   
+        if(va!=pwd){
+			document.getElementById('rpwd').value="";
+			$("#rpw").addClass("has-error");
+			document.getElementById("rpwd").setAttribute("placeholder","密码不一致");
+          
+            document.form1.sub.disabled=true;
+        }else{
+			$("#rpw").removeClass("has-error");
+            document.form1.sub.disabled=false;
+            }   
+    }
+ 
+    function checkEmail(va){
+            
+         var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+         if(!myreg.test(va)){
+			document.getElementById('email').value="";
+				$("#emi").addClass("has-error");	
+				document.getElementById("email").setAttribute("placeholder","请检查邮箱格式");
+             
+             document.form1.sub.disabled=true;
+            }else{
+               $("#emi").removeClass("has-error");
+                document.form1.sub.disabled=false;
+            }   
+    }
+         
+</script>
+
+
+
+
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
