@@ -359,13 +359,12 @@
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> Email </div>
+													<div class="profile-info-name"> Wechat ID </div>
 
 													<div class="profile-info-value">
-														<i class="fa fa-map-marker light-orange bigger-110"></i>
-														<span class="editable" id="country"><%= userInfo.email %></span>
-														<span class="editable" id="city">北京</span>
-													</div>
+														<i class="fa fa-wechat light-orange bigger-110"></i>
+														<span class="editable" id="country"><%= userInfo.weixinid %></span>
+			<span class="editable" id="city">北京</span>								</div>
 												</div>
 
 												<div class="profile-info-row">
@@ -381,22 +380,22 @@
 
 													<div class="profile-info-value">
 														<span class="editable" id="signup"><%= userInfo.createTime %></span>
-													</div>:
-												</div>
-
-												<div class="profile-info-row">
-													<div class="profile-info-name"> Grade </div>
-
-													<div class="profile-info-value">
-														<span class="editable" id="login"><%= userInfo.grade %></span>
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> About Me </div>
+													<div class="profile-info-name"> Gender </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="about">Editable as WYSIWYG</span>
+<span class="editable" id="login"><%=userInfo.gender %></span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name">tel </div>
+
+													<div class="profile-info-value">
+														<span class="editable" id="about"><%=userInfo.tel%></span>
 													</div>
 												</div>
 											</div>

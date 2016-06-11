@@ -18,10 +18,13 @@
  {
          username:String,
          password:String,
-          email:String,
-		  grade:String,
-		  studentId:String,
-          createTime:{
+        email:String,
+	grade:String,
+	studentId:String,
+	tel:String,
+	gender:String,
+	weixinid:String,
+        createTime:{
 			type:String,
 			default:time.day
 		  }

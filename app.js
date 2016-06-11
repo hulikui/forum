@@ -10,8 +10,9 @@
 		,crypto=require('crypto')
 		,querystring=require('querystring')
 		,markdown = require('markdown').markdown
-		,getUserId=require('./lib/user').getUserId;
-		
+		,getUserId=require('./lib/user').getUserId
+		,getMemId=require('./lib/user').getMemId
+		,getUserInfo=require('./lib/user').getUserInfo;
 	var passport = require('passport')
 	    , LocalStrategy = require('passport-local').Strategy
 	    , GithubStrategy = require('passport-github').Strategy
@@ -183,6 +184,11 @@
 				if(err){
 					console.log(err);
 					return res.redirect('/userInfo');
+				}
+				if(userInfos.gender=="1"){
+					userInfos.gender='男';
+				}else{
+					userInfos.gender='女';
 				}
 				res.render('userInfo',{
 				user:req.user,
@@ -544,16 +550,43 @@
 
 //	app.all('/wechat', isLoggedIn);
 	app.get("/wechat",user.wechat);
+
+	app.get("/auth/wscallback",function(req,res){
+		var Url=url.parse(req.url).query;
+		//console.log(Url);
+		var str = querystring.parse(Url);
+		//console.log(str);
+		var code=str.code;
+		console.log('code',code);
+		getMemId(code).then(function(userid){
+		getUserInfo(userid.UserId).then(function(userInfo){
+		console.log('微信手机客户端获取到的用户信息');
+		
+		req.logIn(userInfo,function(err){
+			console.log('已被加入req.user',req.user);
+		
+		
+		var sessionid=req.cookies['connect.sid']||req.cookies.connect.sid;
+		var id=sessionid.replace(/[&\|\\\\/*!$()^%$#,@\:;.-]/g,"");
+		console.log('sessonid',id);
+		var filename="/root/Code/sessions";
+		console.log(req.session);
+
+		/*var ss={
+		userid:userInfo.userid,
+		username:userInfo.name,
+		avatar:userInfo.avatar
+}             */
+		sessionStore(filename,id,req.user);
+		if (err) { console.log(err) }
+		findorcreate(userInfo,req,res);
+});
+
+	});
+
+});
+});
 	app.get("/auth/wechat/callback",function(req,res){
-		const params={};
-		 params['appid'] = "wx1d3765eb45497a18";
-	  params['redirect_uri'] = "http://www.ssforum.top/auth/wechat/callback";
-	  params['response_type'] = 'code';
-	  params['scope'] = 'snsapi_base';
-	  params['state'] = 'state';
-	 
-	  var outhurl="https://open.weixin.qq.com/connect/oauth2/authorize" + '?' + querystring.stringify(params)+"#wechat_redirect";
-	console.log(outhurl);
 		
 		
 		var Url=url.parse(req.url).query;
@@ -566,23 +599,6 @@
 		var userInfo=userId.user_info;
 		console.log('获取的微信用户信息',userInfo);
 		req.logIn(userInfo,function(err){
-		//这里直接用数据库语句判断
-	/*	req.session.username=userInfo.name;
-		var sessionid=req.cookies['connect.sid']||req.cookies.connect.sid;
-		var id=sessionid.replace(/[&\|\\\*!$()^%$#,@\:;.-]/g,"");
-		console.log('sessonid',id);
-		var filename="/root/Code/sessions"
-		console.log(req.session);
-
-		var session={
-		userid:userInfo.userid,
-		username:userInfo.name,
-		avatar:userInfo.avatar
-};              
-		console.log('自建session',seesion);
-
-	//	sessionStore(filename,id,session);
-*/
 		
 		var sessionid=req.cookies['connect.sid']||req.cookies.connect.sid;
 		var id=sessionid.replace(/[&\|\\\\/*!$()^%$#,@\:;.-]/g,"");
@@ -602,7 +618,17 @@
 });
 });
 });
-app.get("/auth/wechat", passport.authenticate("wechat"));
+app.get("/auth/wechat",function(req,res){
+		const params={};
+		 params['appid'] = "wx1d3765eb45497a18";
+	  params['redirect_uri'] = "http://www.ssforum.top/auth/wscallback";
+	  params['response_type'] = 'code';
+	  params['scope'] = 'snsapi_base';
+	  params['state'] = 'state';
+	  var authurl="https://open.weixin.qq.com/connect/oauth2/authorize" + '?' + querystring.stringify(params)+"#wechat_redirect";
+	console.log("微信手机跳转",authurl);
+	res.redirect(authurl,302);
+});
 app.get("/wechat/callback",
     passport.authenticate("wechat",{
 	failureRedirect: '/' ,
@@ -639,16 +665,18 @@ function isLoggedIn(req, res, next) {
 }
 
 function findorcreate(userInfo,req,res){ 
-
-	User.findOne({ studentId: userInfo.userid }, function(err, user) {
+	if(userInfo){
+		User.findOne({ studentId: userInfo.userid }, function(err, user) {
 		    if (err) {
 			return done(err);
 		    }
 		    if (!user) {
 			var newuser = new User({
-			    	
+			    	tel:userInfo.mobile,
+				gender:userInfo.gender,
 				studentId:userInfo.userid,
-				username:userInfo.name
+				username:userInfo.name,
+				weixinid:userInfo.weixinid
 					
 			});
 			newuser.save(function(err,doc) {
@@ -663,7 +691,7 @@ function findorcreate(userInfo,req,res){
 		       res.redirect('/users');
 		    }
 		});
-}
+}}
 
 function sessionStore(filename,sessionId, session){
 	var sessionPath=path.join(filename, sessionId + '.json');//要保存的文件地址 
