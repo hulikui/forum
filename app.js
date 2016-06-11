@@ -6,11 +6,12 @@
 		,url=require('url')
 		,flash=require('express-flash')
 	    , app = express()
+		,fs=require('fs')
 		,crypto=require('crypto')
 		,querystring=require('querystring')
 		,markdown = require('markdown').markdown
 		,getUserId=require('./lib/user').getUserId;
-
+		
 	var passport = require('passport')
 	    , LocalStrategy = require('passport-local').Strategy
 	    , GithubStrategy = require('passport-github').Strategy
@@ -27,7 +28,7 @@
 	app.use(express.methodOverride());
 	app.use(express.cookieParser())
 	app.use(express.session({
-		secret: 'www.ssforum.top/login', 
+		secret: 'www.ssforum.top', 
 		cookie: { maxAge: 60000*20 },
 		resave:false,
 		saveUninitialized:true
@@ -164,6 +165,7 @@
 	//app.use(isLoggedIn);
 	app.get('/',function(req,res){
 
+		console.log(process.cwd());
 	    res.render('index',{
 	    user:req.user
 	});
@@ -176,7 +178,8 @@
 	    });
 	});
 	app.get('/userInfo',function(req,res){
-			User.find({username:req.user.username}).exec(function(err,userInfos){
+			var name= req.user.username || req.user.name;
+			User.findOne({username:name },function(err,userInfos){
 				if(err){
 					console.log(err);
 					return res.redirect('/userInfo');
@@ -264,7 +267,7 @@
 	  {       
 			var topic=new Topic({
 				title:req.body.title,
-				author:req.user.username,
+				author:req.user.username||req.user.name,
 				zonelabel:req.body.zonelabel,
 				content:req.body.content,
 				zone:req.body.zone
@@ -291,7 +294,7 @@
 		 var reply=new Reply({
 			 content:docs,
 			 topic_id:topicID,     //req.params.id,
-			 author:req.user.username,
+			 author:req.user.username||req.user.name,
 			 author_id:req.user.studentId
 			 
 		 });
@@ -322,7 +325,7 @@
 	  {       
 			
 			var activity=new Activity({
-				builder:req.user.username,
+				builder:req.user.username||req.user.name,
 				event:req.body.event,
 				title:req.body.title,
 				start:req.body.start,
@@ -338,9 +341,6 @@
 					return res.redirect('/calendars');
 				}
 				console.log('插入活动成功',activity._id);
-				Activity.update({_id:activity._id},{id:activity._id},function(err){
-					console.log('更新ID成功',err);
-				});
 				return res.redirect('/calendars');
 			});
 			
@@ -473,7 +473,7 @@
 	app.all('/users', isLoggedIn);
 	app.get('/users', function(req, res){
 	   
-	    Topic.find({author:req.user.username}).exec(function(err,userTopics){
+	    Topic.find({author:req.user.name||req.user.username}).exec(function(err,userTopics){
 				
 				
 				
@@ -495,7 +495,7 @@
 		
 	  });
 	  app.get('/listdata',function(req,res){
-			 Topic.find({author:req.user.username}).exec(function(err,userTopics){
+			 Topic.find({author:req.user.name||req.user.username}).exec(function(err,userTopics){
 				res.jsonp(userTopics);
 			});
 	});
@@ -554,22 +554,54 @@
 	 
 	  var outhurl="https://open.weixin.qq.com/connect/oauth2/authorize" + '?' + querystring.stringify(params)+"#wechat_redirect";
 	console.log(outhurl);
+		
+		
 		var Url=url.parse(req.url).query;
-		console.log(Url);
+		//console.log(Url);
 		var str = querystring.parse(Url);
-		console.log(str);
+		//console.log(str);
 		var code=str.auth_code;
-		console.log(code);
+		//console.log(code);
 		getUserId(code).then(function(userId){
-		console.log(userId.user_info);
-		req.logIn(userId.user_info,function(err){
+		var userInfo=userId.user_info;
+		console.log('获取的微信用户信息',userInfo);
+		req.logIn(userInfo,function(err){
 		//这里直接用数据库语句判断
-	if (err) { return next(err); }
-      return res.redirect('/wechat');
-    });
-});
-});
+	/*	req.session.username=userInfo.name;
+		var sessionid=req.cookies['connect.sid']||req.cookies.connect.sid;
+		var id=sessionid.replace(/[&\|\\\*!$()^%$#,@\:;.-]/g,"");
+		console.log('sessonid',id);
+		var filename="/root/Code/sessions"
+		console.log(req.session);
 
+		var session={
+		userid:userInfo.userid,
+		username:userInfo.name,
+		avatar:userInfo.avatar
+};              
+		console.log('自建session',seesion);
+
+	//	sessionStore(filename,id,session);
+*/
+		
+		var sessionid=req.cookies['connect.sid']||req.cookies.connect.sid;
+		var id=sessionid.replace(/[&\|\\\\/*!$()^%$#,@\:;.-]/g,"");
+		console.log('sessonid',id);
+		var filename="/root/Code/sessions";
+		console.log(req.session);
+
+		var ss={
+		userid:userInfo.userid,
+		username:userInfo.name,
+		avatar:userInfo.avatar
+}             
+		console.log('自建session',ss);
+		sessionStore(filename,id,ss);
+		if (err) { console.log(err) }
+		findorcreate(userInfo,req,res);
+});
+});
+});
 app.get("/auth/wechat", passport.authenticate("wechat"));
 app.get("/wechat/callback",
     passport.authenticate("wechat",{
@@ -605,3 +637,40 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/login');
 }
+
+function findorcreate(userInfo,req,res){ 
+
+	User.findOne({ studentId: userInfo.userid }, function(err, user) {
+		    if (err) {
+			return done(err);
+		    }
+		    if (!user) {
+			var newuser = new User({
+			    	
+				studentId:userInfo.userid,
+				username:userInfo.name
+					
+			});
+			newuser.save(function(err,doc) {
+			    if (err) console.log(err);
+				console.log('新用户登录');
+			    return res.redirect('/users');
+			});
+		    } else {
+			//found user. Return
+			
+			console.log('老用户登录');
+		       res.redirect('/users');
+		    }
+		});
+}
+
+function sessionStore(filename,sessionId, session){
+	var sessionPath=path.join(filename, sessionId + '.json');//要保存的文件地址 
+	 var json = JSON.stringify(session);//要保存的信息
+	console.log('解析的json数据',json);
+	fs.writeFile(sessionPath,json, function (err) {
+   if (err) throw err;
+   console.log('It\'s saved!');
+ });
+ }

@@ -366,10 +366,10 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="<%=user.avatar%>" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<%= user.username %>!
+									<%= user.username||user.name %>!
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -550,13 +550,13 @@
 							</li>
 
 							<li class="side-bar wechat">
-								<a href="typography.html" class="icon-chat">
+								<a href="http://www.ssforum.top:3000/" class="icon-chat">
 									
 									<div class="chat-tips wechat">
 							<i class="menu-icon fa fa-caret-right"></i>
 									
 <img style="width:260px;height:210px;" id="chat" src="/image/wechat.png" _fcksavedurl=""/image/chat.jpg"" alt="微信群聊二维码">
-</div>							微信群聊
+</div>							论坛群聊
 								</a>
 
 								<b class="arrow"></b>

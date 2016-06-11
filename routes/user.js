@@ -5,7 +5,13 @@ exports.wechat = function (req, res) {
 };
 
 exports.github = function (req, res) {
-    var html = "<h2>你好, github用户" + req.user.displayName +"(" + req.user.username+")</h2>" +
+	var name=req.user.name||req.user.username;
+/*	if(req.user.name){
+		name=req.user.name;	
+	}else{
+		name=req.user.username;
+	}*/
+    var html = "<h2>你好, github用户(" +name+")</h2>" +
         "<p>blog: <a href='http://www.ssforum.top'>主页</a></p>" +
         "<p><a href='/logout'>退出</a></p>";
     res.send(html);
