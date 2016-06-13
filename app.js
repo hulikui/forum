@@ -66,23 +66,22 @@
 		  //  password: 'pass'
 	       // };
 		   // 可以配置通过数据库方式读取登陆账号
-		User.findOne({username:username},function(err,user){
+		User.findOne({studentId:username},function(err,user){
 				   if(err){
 			 console.log(err);
-					 var userr='用户名密码错误！'
-				 return done(null, false, { message: err });
+				 return done(null, false, { message:err });
 			 
 			  }
 			  if(!user){
 			 console.log('用户名不存在！');
+			var userr='学号不存在,请先用微信移动端登陆.'
 					
-					
-			 return done(null, false, { message: 'Incorrect username.' });
+			 return done(null, false, { message: userr });
 			 }
 			  //对密码进行MD加密
-			 var md5=crypto.createHash('md5'),
-			  md5password=md5.update(password).digest('hex');
-			  if(user.password!==md5password){
+			// var md5=crypto.createHash('md5'),
+			 // md5password=md5.update(password).digest('hex');
+			  if(user.tel!==password){
 						  console.log('密码错误');
 						  
 						
@@ -163,7 +162,7 @@
 	passport.deserializeUser(function (user, done) {//删除user对象
 	    done(null, user);//可以通过数据库方式操作
 	});
-	//app.use(isLoggedIn);
+	app.use(isLoggedIn);
 	app.get('/',function(req,res){
 
 		console.log(process.cwd());
@@ -178,6 +177,23 @@
 		title:'北京大学软件与微电子学院校园论坛'
 	    });
 	});
+	
+	app.get('/photos',function(req,res){
+
+	    res.render('photos',{
+		user:req.user,
+		title:'北京大学软件与微电子学院校园论坛'
+	    });
+	});
+	app.get('/wsq',function(req,res){
+
+	res.render('wsq',{
+	user:req.user,
+	title:'微信墙'
+
+});
+
+});
 	app.get('/userInfo',function(req,res){
 			var name= req.user.username || req.user.name;
 			User.findOne({username:name },function(err,userInfos){
@@ -270,18 +286,22 @@
 	   
 	  });
 	 app.post('/editor',function(req,res)
-	  {       
+	  {       var comment={
+			content:''
+		}
 			var topic=new Topic({
 				title:req.body.title,
 				author:req.user.username||req.user.name,
 				zonelabel:req.body.zonelabel,
 				content:req.body.content,
 				zone:req.body.zone
+			//	comments:[mongoose.Schema.Types.ObjectId]
 			});
 			console.log(topic);
 			topic.save(function(err,doc){
 				if(err){
-					console.log('err');
+					console.log(err);
+					console.log(doc);
 					return res.redirect('/editor');
 				}
 				console.log('文章发表成功！');

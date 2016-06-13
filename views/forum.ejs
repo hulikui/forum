@@ -1046,7 +1046,7 @@
 		<script src="/assets/js/ace/ace.settings-rtl.js"></script>
 		<script src="/assets/js/ace/ace.settings-skin.js"></script>
 		<script src="/assets/js/ace/ace.widget-on-reload.js"></script>
-		<script src="/assets/js/ace/ace.searchbox-autocomplete.js"></script>
+		?<script src="/assets/js/ace/ace.searchbox-autocomplete.js"></script>
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
@@ -1244,9 +1244,9 @@ $('#reply').submit();
 				//display first message in a new area
 				$('.message-list .message-item .text').on('click', function() {
 				//	获取index
-			
+					
 					var index=$(this).find("input").val();
-					console.log(index);
+					console.log('获取index',index);
 					//show the loading icon
 					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
 					

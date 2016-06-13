@@ -1,8 +1,6 @@
 ﻿  var mongoose=require('mongoose');
  var Schema=mongoose.Schema;
  var objectId = Schema.ObjectId;
- var autoIncrement = require('mongoose-auto-increment');   //自增ID 模块
-    autoIncrement.initialize(mongoose.connection);   //初始化
 	var date = new Date();
 	
     //存储各种时间格式，方便以后扩展
@@ -38,16 +36,10 @@
   author:{type:String},//4
   reply_id : { type: String },
   replyname:{type:String},
-  floor:{type:Number,default: 0},//
+  //floor:{type:Number,default: 0},//
   create_at: { type: String, default: time.minute },//5
   update_at: { type: String, default: time.minute }
   
-});
-replySchema.plugin(autoIncrement.plugin, {
-    model: 'Reply',   //数据模块，需要跟同名 x.model("Books", BooksSchema);
-    field: 'floor',     //字段名
-    startAt: 0,    //开始位置，自定义
-    incrementBy: 1    //每次自增数量
 });
   var topicSchema=new Schema(
  {		
