@@ -1,6 +1,6 @@
 # forum
 #**功能和模块**：
-##views 文件下的index.ejs 具体阐述实现的功能和使用到的主要模块，运行状态下 直接输入 / 路径即可查询
+##views 文件下的index.ejs 具体阐述实现的功能和使用到的主要模块，运行状态下 直接输入 / 路径即可**[查询](https://github.com/hulikui/forum/blob/master/views/index.ejs)**
 #**运行环境**
 ###数据库 mongodb
 ###安装依赖 npm install
